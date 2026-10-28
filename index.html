@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -7,13 +7,13 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="泡泡圣诞树">
+<meta name="apple-mobile-web-app-title" content="心愿树">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23171d3b'/%3E%3Cpath d='M32 9l5.2 15.8L53 30l-15.8 5.2L32 51l-5.2-15.8L11 30l15.8-5.2z' fill='%23ffd36e'/%3E%3Ccircle cx='32' cy='30' r='3' fill='%235b4054'/%3E%3C/svg%3E">
-<meta name="description" content="一棵会发光的泡泡圣诞树。点一点泡泡、听听音乐盒，把愿望挂到星星旁边。">
+<meta name="description" content="一棵会发光的心愿树。挂上照片和想说的话，换一套喜欢的风格，把心愿挂在树梢。">
 <meta property="og:type" content="website">
-<meta property="og:title" content="泡泡圣诞树 · 和小可爱一起许愿">
-<meta property="og:description" content="点一点树上的小泡泡，双击空白放烟花。">
-<title>泡泡圣诞树 · Bubble Christmas</title>
+<meta property="og:title" content="心愿树 · 把想说的话挂到树上">
+<meta property="og:description" content="五种风格，可以挂照片、挂文字礼物，也可以许愿。">
+<title>心愿树 · Wish Tree</title>
 <style>
   :root{
     --cream:#fffaf2;
@@ -24,12 +24,118 @@
     --gold:#ffd36e;
     --safe-b:env(safe-area-inset-bottom, 0px);
     --safe-t:env(safe-area-inset-top, 0px);
+
+    /* 默认风格：午夜松林 */
+    --sky-1:#4b467e; --sky-2:#2b2b56; --sky-3:#171d3b; --sky-4:#0a0f22;
+    --aur-1:rgba(255,141,192,.9); --aur-2:rgba(104,238,207,.8); --aur-3:rgba(137,115,255,.6);
+    --vig-1:rgba(5,9,22,.28); --vig-2:rgba(4,7,18,.55);
+    --silhouette:#116f61; --glow-a:#86f0cd; --glow-b:#5ed6c3;
+    --m1a:#e2fff0; --m1b:#9af2c9; --m1c:#54d4aa; --m1d:#1c9a7c;
+    --m2a:#d2fbe7; --m2b:#7ae3bd; --m2c:#34ba95; --m2d:#147d68;
+    --m3a:#eefff5; --m3b:#b7f7d7; --m3c:#67dcb4; --m3d:#25a183;
+    --m4a:#c9f5dd; --m4b:#63caa6; --m4c:#249678; --m4d:#0e675d;
+    --pa:#fff3f8; --pb:#ffc0da; --pc:#f487b4; --pd:#d64f8c;
+    --la:#fbf3ff; --lb:#d9bdfb; --lc:#ab7bea; --ld:#7b4bc2;
+    --snow-a:#f3fff9; --snow-b:#e3f8f1; --snow-c:#c9ece2;
+    --ground-a:#fffdf8; --ground-b:#fffdf8;
+    --ui-ink:#fffaf1; --ui-dim:rgba(255,244,238,.56);
+    --ui-chip:rgba(20,25,52,.34); --ui-chip-line:rgba(255,255,255,.13);
+    --ui-dock-a:rgba(255,255,255,.155); --ui-dock-b:rgba(255,255,255,.065);
+    --ui-line:rgba(255,255,255,.22); --ui-ctl:rgba(255,255,255,.045); --ui-ctl-line:rgba(255,255,255,.1);
+    --ui-active-a:#ffe0ec; --ui-active-b:#ff9ac0; --ui-active-ink:#5a384e;
+    --grain:.045;
+  }
+
+  /* 奶油晨光 */
+  body[data-theme="cream"]{
+    --sky-1:#fff8ee; --sky-2:#ffeede; --sky-3:#ffe0cd; --sky-4:#f4ead8;
+    --aur-1:rgba(255,214,140,.75); --aur-2:rgba(168,226,190,.65); --aur-3:rgba(255,180,205,.55);
+    --vig-1:rgba(150,104,74,.08); --vig-2:rgba(120,80,60,.16);
+    --silhouette:#8cc7ab; --glow-a:#d9f5e6; --glow-b:#a9dec6;
+    --m1a:#ffffff; --m1b:#d6f5e5; --m1c:#9fe0c2; --m1d:#5fb894;
+    --m2a:#f7fffb; --m2b:#c2efd9; --m2c:#86d5b4; --m2d:#4aa383;
+    --m3a:#ffffff; --m3b:#e4f9ee; --m3c:#b2e8cd; --m3d:#74c3a0;
+    --m4a:#eefaf2; --m4b:#b4e8cf; --m4c:#7cc9a9; --m4d:#46997c;
+    --pa:#fff7fb; --pb:#ffd6e5; --pc:#f7a8c6; --pd:#d9779f;
+    --la:#fdf8ff; --lb:#e6d6fb; --lc:#c4a4ea; --ld:#9a74c4;
+    --snow-a:#ffffff; --snow-b:#fff6ea; --snow-c:#ffe9d5;
+    --ground-a:#fffdf8; --ground-b:#fffaf2;
+    --ui-ink:#6b4a44; --ui-dim:rgba(122,84,76,.62);
+    --ui-chip:rgba(255,255,255,.62); --ui-chip-line:rgba(255,255,255,.92);
+    --ui-dock-a:rgba(255,255,255,.74); --ui-dock-b:rgba(255,255,255,.44);
+    --ui-line:rgba(255,255,255,.9); --ui-ctl:rgba(255,255,255,.52); --ui-ctl-line:rgba(255,255,255,.82);
+    --ui-active-a:#ffe0ec; --ui-active-b:#ffb3ce; --ui-active-ink:#6b4a44;
+    --grain:.03;
+  }
+
+  /* 黑金夜宴 */
+  body[data-theme="noir"]{
+    --sky-1:#241f1a; --sky-2:#15120f; --sky-3:#0c0a08; --sky-4:#060505;
+    --aur-1:rgba(255,196,90,.35); --aur-2:rgba(255,120,90,.18); --aur-3:rgba(255,230,160,.12);
+    --vig-1:rgba(0,0,0,.34); --vig-2:rgba(0,0,0,.62);
+    --silhouette:#0e1a14; --glow-a:#d8b25e; --glow-b:#a8863f;
+    --m1a:#fff6d8; --m1b:#ffe8a8; --m1c:#d8b25e; --m1d:#8a6a25;
+    --m2a:#e8fff2; --m2b:#a8e6c6; --m2c:#4f9a76; --m2d:#1d4a35;
+    --m3a:#fff9e2; --m3b:#f5d98c; --m3c:#c9a04b; --m3d:#7d5f22;
+    --m4a:#dff3e8; --m4b:#8cc9a8; --m4c:#3f7a5c; --m4d:#1a3b2c;
+    --pa:#ffe8e0; --pb:#f2b6a0; --pc:#c9705a; --pd:#8a4030;
+    --la:#f4efe2; --lb:#d8c9a8; --lc:#a89272; --ld:#6f5c43;
+    --snow-a:#2a241c; --snow-b:#1e1913; --snow-c:#14100c;
+    --ground-a:#1a1611; --ground-b:#221c15;
+    --ui-ink:#f7ecd6; --ui-dim:rgba(247,236,214,.55);
+    --ui-chip:rgba(10,10,10,.5); --ui-chip-line:rgba(255,230,170,.16);
+    --ui-dock-a:rgba(255,235,190,.12); --ui-dock-b:rgba(255,225,170,.04);
+    --ui-line:rgba(255,230,170,.2); --ui-ctl:rgba(255,235,190,.05); --ui-ctl-line:rgba(255,230,170,.14);
+    --ui-active-a:#ffe9b0; --ui-active-b:#e8bf6a; --ui-active-ink:#3a2a12;
+    --grain:.07;
+  }
+
+  /* 樱花黄昏 */
+  body[data-theme="sakura"]{
+    --sky-1:#7b567f; --sky-2:#5b3f63; --sky-3:#3a2a48; --sky-4:#1d1630;
+    --aur-1:rgba(255,170,205,.85); --aur-2:rgba(210,160,255,.55); --aur-3:rgba(255,205,160,.45);
+    --silhouette:#6a4660; --glow-a:#ffc6dd; --glow-b:#e79cbe;
+    --m1a:#fff4f9; --m1b:#ffd6e8; --m1c:#f7a8c9; --m1d:#cd6f9a;
+    --m2a:#ffe9f3; --m2b:#ffc2dc; --m2c:#ec8fba; --m2d:#b85a86;
+    --m3a:#fff8fc; --m3b:#ffe2ef; --m3c:#f9b7d4; --m3d:#d47ca4;
+    --m4a:#fbe4f0; --m4b:#f2b6d2; --m4c:#d98cb0; --m4d:#a45a7c;
+    --pa:#fff6fa; --pb:#ffd2e4; --pc:#f59cc0; --pd:#cf6b95;
+    --la:#f8f0ff; --lb:#ddc6ff; --lc:#b795e6; --ld:#8a67bd;
+    --snow-a:#fff5fb; --snow-b:#ffe8f3; --snow-c:#f6d3e4;
+    --ground-a:#fff9fd; --ground-b:#fff2f9;
+    --ui-ink:#fff6fb; --ui-dim:rgba(255,240,250,.6);
+    --ui-chip:rgba(58,32,54,.4); --ui-chip-line:rgba(255,220,240,.2);
+    --ui-dock-a:rgba(255,220,240,.16); --ui-dock-b:rgba(255,200,230,.05);
+    --ui-line:rgba(255,214,236,.24); --ui-ctl:rgba(255,220,240,.06); --ui-ctl-line:rgba(255,214,236,.16);
+    --ui-active-a:#ffe2ef; --ui-active-b:#ffa9cb; --ui-active-ink:#6d3a56;
+    --grain:.05;
+  }
+
+  /* 极光森林 */
+  body[data-theme="aurora"]{
+    --sky-1:#0a3d4a; --sky-2:#07303f; --sky-3:#042131; --sky-4:#02131f;
+    --aur-1:rgba(90,255,205,.55); --aur-2:rgba(120,200,255,.5); --aur-3:rgba(165,120,255,.45);
+    --silhouette:#0c4a4a; --glow-a:#7ff0d0; --glow-b:#46c7b4;
+    --m1a:#e8fffb; --m1b:#a8f7e6; --m1c:#5fdcc6; --m1d:#1f918b;
+    --m2a:#e0fbff; --m2b:#9de9f5; --m2c:#54c3d8; --m2d:#1f7f94;
+    --m3a:#effff8; --m3b:#bdf6e4; --m3c:#7fe0cb; --m3d:#2f9f95;
+    --m4a:#dcf7f4; --m4b:#8fd9d6; --m4c:#4aa6a8; --m4d:#1d6a70;
+    --pa:#f0f7ff; --pb:#c9e4ff; --pc:#8fbdf0; --pd:#5a86bf;
+    --la:#f4f2ff; --lb:#d4ccff; --lc:#a89af0; --ld:#7a68c4;
+    --snow-a:#eefcff; --snow-b:#dcf6f8; --snow-c:#bfe6ea;
+    --ground-a:#f2fdff; --ground-b:#eafcff;
+    --ui-ink:#eefcff; --ui-dim:rgba(226,250,255,.58);
+    --ui-chip:rgba(4,32,42,.44); --ui-chip-line:rgba(180,240,255,.18);
+    --ui-dock-a:rgba(190,250,255,.14); --ui-dock-b:rgba(160,240,255,.045);
+    --ui-line:rgba(180,240,255,.22); --ui-ctl:rgba(190,250,255,.05); --ui-ctl-line:rgba(180,240,255,.14);
+    --ui-active-a:#d8fff4; --ui-active-b:#8fe9d6; --ui-active-ink:#175249;
+    --grain:.04;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{height:100%;margin:0;overflow:hidden;background:#10152c;overscroll-behavior:none}
   body{
     font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",system-ui,-apple-system,sans-serif;
-    color:var(--cream);
+    color:var(--ui-ink);
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
     user-select:none;
@@ -38,20 +144,24 @@
     text-size-adjust:100%;
     touch-action:manipulation;
   }
-  button,input{font-family:inherit}
+  button,input,textarea{font-family:inherit}
   #app{
     position:fixed;inset:0;overflow:hidden;background:
-      radial-gradient(120% 68% at 50% -4%, #4b467e 0%, #2b2b56 34%, #171d3b 66%, #0a0f22 100%);
+      radial-gradient(120% 68% at 50% -4%, var(--sky-1) 0%, var(--sky-2) 34%, var(--sky-3) 66%, var(--sky-4) 100%);
+    transition:background .5s ease;
   }
   #app::after{
     content:"";position:absolute;inset:0;z-index:4;pointer-events:none;
-    background:radial-gradient(ellipse at 50% 43%, transparent 42%, rgba(5,9,22,.28) 77%, rgba(4,7,18,.55) 100%);
+    background:radial-gradient(ellipse at 50% 43%, transparent 42%, var(--vig-1) 77%, var(--vig-2) 100%);
   }
   .backdrop{position:absolute;inset:0;overflow:hidden;z-index:0}
   .aurora{position:absolute;border-radius:50%;filter:blur(42px);opacity:.38;mix-blend-mode:screen;animation:aurora 17s ease-in-out infinite alternate}
-  .aurora.a1{width:70vw;height:70vw;left:-32vw;top:-8vh;background:radial-gradient(circle,rgba(255,141,192,.9),rgba(255,141,192,0) 68%)}
-  .aurora.a2{width:76vw;height:76vw;right:-38vw;top:4vh;background:radial-gradient(circle,rgba(104,238,207,.8),rgba(104,238,207,0) 68%);animation-delay:-6s}
-  .aurora.a3{width:80vw;height:62vw;left:8vw;bottom:-30vh;background:radial-gradient(circle,rgba(137,115,255,.6),rgba(137,115,255,0) 70%);animation-delay:-11s}
+  .aurora.a1{width:70vw;height:70vw;left:-32vw;top:-8vh;background:radial-gradient(circle,var(--aur-1),transparent 68%)}
+  .aurora.a2{width:76vw;height:76vw;right:-38vw;top:4vh;background:radial-gradient(circle,var(--aur-2),transparent 68%);animation-delay:-6s}
+  .aurora.a3{width:80vw;height:62vw;left:8vw;bottom:-30vh;background:radial-gradient(circle,var(--aur-3),transparent 70%);animation-delay:-11s}
+  body[data-theme="cream"] .aurora{mix-blend-mode:multiply;opacity:.5}
+  body[data-theme="cream"] .star{opacity:.35}
+  body[data-theme="cream"] .float-bubble{opacity:.5;border-color:rgba(255,255,255,.5)}
 
   .sky{position:absolute;inset:0;overflow:hidden}
   .star{
@@ -80,9 +190,11 @@
     width:min(100%,560px);height:100%;z-index:3;display:block;overflow:hidden;
   }
   #scene [data-hit]{cursor:pointer;outline:none}
+  #treeSilhouette{fill:var(--silhouette);transition:fill .5s ease}
+  #groundTop{fill:var(--ground-b)}
   #fx{position:absolute;inset:0;width:100%;height:100%;z-index:14;pointer-events:none}
   .grain{
-    position:absolute;inset:0;z-index:5;pointer-events:none;opacity:.045;
+    position:absolute;inset:0;z-index:5;pointer-events:none;opacity:var(--grain);
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
     mix-blend-mode:soft-light;
   }
@@ -97,22 +209,22 @@
   .eyebrow{
     display:flex;align-items:center;justify-content:center;gap:9px;
     font-size:8px;letter-spacing:.34em;font-weight:600;
-    color:rgba(255,247,236,.58);text-transform:uppercase;
+    color:var(--ui-dim);text-transform:uppercase;
   }
   .eyebrow::before,.eyebrow::after{
     content:"";display:block;width:24px;height:1px;
-    background:linear-gradient(90deg,transparent,rgba(255,218,231,.55));
+    background:linear-gradient(90deg,transparent,var(--ui-line));
   }
   .eyebrow::after{transform:scaleX(-1)}
   h1{
     margin:6px 0 0;font-size:clamp(19px,5.6vw,25px);line-height:1.2;
     font-weight:800;letter-spacing:.15em;
-    color:#fffaf1;
+    color:var(--ui-ink);
     text-shadow:0 2px 0 rgba(91,55,80,.22),0 4px 24px rgba(255,158,196,.32);
   }
   .sub{
     margin:5px 0 0;font-size:8px;letter-spacing:.2em;
-    color:rgba(255,244,238,.56);font-weight:500;text-transform:uppercase;
+    color:var(--ui-dim);font-weight:500;text-transform:uppercase;
   }
 
   /* ---------- hint ---------- */
@@ -121,9 +233,9 @@
     transform:translate(-50%,8px);opacity:0;white-space:nowrap;
     padding:7px 12px;border-radius:999px;
     font-size:10px;font-weight:500;letter-spacing:.03em;
-    color:rgba(255,248,240,.82);
-    background:rgba(20,25,52,.34);
-    border:1px solid rgba(255,255,255,.13);
+    color:var(--ui-ink);
+    background:var(--ui-chip);
+    border:1px solid var(--ui-chip-line);
     box-shadow:0 8px 24px rgba(4,8,22,.18);
     -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
     transition:opacity .5s ease,transform .5s ease;
@@ -139,30 +251,43 @@
     transform:translate(-50%,16px);opacity:0;
     display:flex;align-items:center;gap:6px;padding:7px;
     border-radius:26px;
-    background:linear-gradient(180deg,rgba(255,255,255,.155),rgba(255,255,255,.065));
-    border:1px solid rgba(255,255,255,.22);
+    background:linear-gradient(180deg,var(--ui-dock-a),var(--ui-dock-b));
+    border:1px solid var(--ui-line);
     box-shadow:0 20px 50px rgba(4,8,22,.42),inset 0 1px 0 rgba(255,255,255,.32);
     -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
     transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1);
   }
   body.ready .dock{opacity:1;transform:translate(-50%,0);transition-delay:.82s}
   .ctl{
-    position:relative;width:64px;height:56px;padding:0;border:1px solid rgba(255,255,255,.1);
-    border-radius:19px;background:rgba(255,255,255,.045);color:#fef8ee;
+    position:relative;width:64px;height:56px;padding:0;border:1px solid var(--ui-ctl-line);
+    border-radius:19px;background:var(--ui-ctl);color:var(--ui-ink);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
     cursor:pointer;transition:transform .15s ease,background .25s ease,color .25s ease,box-shadow .25s ease;
   }
   .ctl svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s ease}
   .ctl .lbl{font-size:9px;font-weight:600;letter-spacing:.08em;opacity:.86;transition:opacity .2s}
+  .ctl .badge{
+    position:absolute;top:-4px;right:-3px;min-width:17px;height:17px;padding:0 4px;
+    border-radius:9px;background:linear-gradient(145deg,#ffdca8,#f0b45e);color:#5a3a1e;
+    font-size:9.5px;font-weight:800;line-height:17px;text-align:center;
+    box-shadow:0 2px 6px rgba(120,70,20,.35);
+  }
+  .ctl .badge[hidden]{display:none}
   .ctl:active{transform:scale(.92)}
   .ctl.active{
-    color:#5a384e;border-color:rgba(255,255,255,.58);
-    background:linear-gradient(145deg,#ffe0ec 0%,#ffb3ce 54%,#ff9ac0 100%);
+    color:var(--ui-active-ink);border-color:rgba(255,255,255,.58);
+    background:linear-gradient(145deg,var(--ui-active-a) 0%,var(--ui-active-b) 100%);
     box-shadow:0 7px 20px rgba(255,126,174,.3),inset 0 1px 0 #fff,inset 0 -2px 0 rgba(200,92,137,.14);
   }
   .ctl.active svg{transform:scale(1.06)}
   .ctl.active .lbl{opacity:1}
   .ctl:focus-visible{outline:2px solid #ffe1a9;outline-offset:2px}
+  @media (max-width:372px){
+    .dock{gap:4px;padding:6px}
+    .ctl{width:57px;height:52px;border-radius:17px}
+    .ctl svg{width:17px;height:17px}
+    .ctl .lbl{font-size:8.5px}
+  }
 
   /* ---------- toast ---------- */
   .toast{
@@ -252,6 +377,106 @@
 
   .noscript{position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;padding:30px;background:#171d3b;color:#fff;font-size:14px;text-align:center;line-height:1.8}
 
+  /* ---------- theme picker ---------- */
+  .theme-btn{
+    position:absolute;z-index:24;top:calc(13px + var(--safe-t));right:13px;
+    width:38px;height:38px;border-radius:50%;
+    border:1px solid var(--ui-chip-line);background:var(--ui-chip);color:var(--ui-ink);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    opacity:0;transform:translateY(-6px);
+    transition:opacity .6s ease,transform .6s ease,background .3s ease;
+  }
+  body.ready .theme-btn{opacity:1;transform:none;transition-delay:.9s}
+  .theme-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .theme-btn:active{transform:scale(.94)}
+  .theme-btn:focus-visible{outline:2px solid #ffe1a9;outline-offset:2px}
+
+  .theme-card{width:min(342px,calc(100vw - 34px));padding:22px 18px 16px;text-align:left}
+  .theme-card h2{text-align:center}
+  .theme-card .copy{text-align:center;margin:6px 0 14px}
+  .theme-list{display:grid;gap:8px}
+  .theme-item{
+    display:flex;align-items:center;gap:10px;width:100%;padding:9px 11px;
+    border-radius:14px;border:1.5px solid #f6dbe6;background:rgba(255,255,255,.72);
+    color:#6b4a58;cursor:pointer;text-align:left;
+    transition:border-color .2s ease,background .2s ease,transform .15s ease;
+  }
+  .theme-item:active{transform:scale(.985)}
+  .theme-item.active{border-color:#f39dbc;background:#fff;box-shadow:0 6px 18px rgba(240,120,160,.16)}
+  .theme-item .name{font-size:12.5px;font-weight:700;letter-spacing:.04em;flex:1}
+  .theme-item .name small{display:block;font-size:8.5px;font-weight:500;color:#b08a99;letter-spacing:.12em;margin-top:2px}
+  .theme-item .dots{display:flex;gap:3px}
+  .theme-item .dots i{width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+  .theme-item .tick{width:15px;color:#e26d9b;font-weight:900;font-size:13px;text-align:center}
+  .theme-item .tick[hidden]{display:none}
+
+  /* ---------- gift form ---------- */
+  .gift-card{
+    width:min(344px,calc(100vw - 32px));padding:22px 20px 15px;text-align:center;
+    max-height:calc(100dvh - 44px);overflow-y:auto;-webkit-overflow-scrolling:touch;
+  }
+  .gift-card .copy{margin:6px 0 12px}
+  .gift-tabs{display:flex;gap:5px;padding:4px;border-radius:13px;background:rgba(255,236,243,.92);margin:0 0 12px}
+  .gift-tab{flex:1;border:0;background:transparent;border-radius:10px;padding:8px 0;font-size:12px;font-weight:700;color:#b58a9c;cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
+  .gift-tab.active{background:#fff;color:#d0527f;box-shadow:0 3px 10px rgba(226,109,155,.18)}
+  .gift-pane[hidden]{display:none}
+  .gift-drop{
+    position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+    min-height:96px;border-radius:15px;border:1.5px dashed #f2b9cf;background:rgba(255,255,255,.66);
+    color:#b4869a;font-size:11.5px;cursor:pointer;overflow:hidden;margin-bottom:8px;
+  }
+  .gift-drop img{width:100%;height:140px;object-fit:cover;display:block}
+  .gift-drop.has-photo{border-style:solid;border-color:#f7cddd;min-height:0;gap:0}
+  .gift-drop.has-photo .drop-label{display:none}
+  .gift-drop .drop-label b{display:block;font-size:12px;color:#a8627f;margin-bottom:2px}
+  .gift-tip{margin:0 0 8px;font-size:9.5px;color:#b59aa6;letter-spacing:.03em;text-align:center;line-height:1.5}
+  .gift-textarea{height:94px;padding:11px 13px;resize:none;line-height:1.55;text-align:left;font-size:13px}
+  .gift-caption{
+    width:100%;height:40px;margin-top:8px;padding:0 12px;border-radius:12px;
+    border:1.5px solid #f7cddd;background:rgba(255,255,255,.9);color:#5b4054;
+    font-size:12.5px;outline:none;transition:border-color .2s,box-shadow .2s;
+  }
+  .gift-caption:focus{border-color:#f39dbc;box-shadow:0 0 0 4px rgba(255,157,196,.16)}
+  .gift-colors{display:flex;justify-content:center;gap:10px;margin:13px 0 2px}
+  .gift-color{
+    width:26px;height:26px;border-radius:50%;border:2px solid #fff;cursor:pointer;
+    background:var(--c);box-shadow:0 0 0 1.5px #f0cad8;transition:box-shadow .2s,transform .15s;
+  }
+  .gift-color:active{transform:scale(.92)}
+  .gift-color.active{box-shadow:0 0 0 2.5px #f39dbc}
+
+  /* ---------- gift detail ---------- */
+  .gift-view{width:min(332px,calc(100vw - 38px));padding:20px 20px 15px;text-align:center}
+  .gift-view .media{border-radius:16px;overflow:hidden;background:#fff;margin:4px 0 12px;box-shadow:0 8px 24px rgba(120,60,90,.12)}
+  .gift-view .media img{width:100%;max-height:44vh;object-fit:cover;display:block}
+  .gift-view .note{
+    margin:6px 0 14px;padding:16px 14px;border-radius:14px;background:#fff;
+    border:1px solid #f7dbe7;color:#6b4a58;font-size:13.5px;line-height:1.75;
+    white-space:pre-wrap;word-break:break-word;text-align:left;
+  }
+  .gift-view .stamp{font-size:9.5px;color:#b59aa6;letter-spacing:.08em;margin:0 0 12px}
+  .gift-actions{display:flex;gap:8px}
+  .gift-actions button{
+    flex:1;height:40px;border-radius:12px;border:1px solid #f2c8d8;background:#fff;
+    color:#a8627f;font-size:12px;font-weight:700;cursor:pointer;transition:transform .12s ease;
+  }
+  .gift-actions button:active{transform:scale(.97)}
+  .gift-actions button.danger{color:#c15353;border-color:#f0c9c9;background:#fff8f8}
+
+  /* ---------- ornaments hanging on the tree ---------- */
+  #hangingGifts{pointer-events:none}
+  #hangingGifts .gift-item{pointer-events:auto}
+  .gift-item{cursor:pointer;transform-box:fill-box;transform-origin:50% 0%}
+  .gift-item.drop{animation:giftDrop .62s cubic-bezier(.2,.9,.2,1.15) both}
+  @keyframes giftDrop{
+    0%{opacity:0;transform:translateY(-16px) scale(.72) rotate(-7deg)}
+    68%{opacity:1;transform:translateY(3px) scale(1.05) rotate(1.5deg)}
+    100%{opacity:1;transform:none}
+  }
+  .gift-item .gift-focus{fill:none;stroke:transparent;stroke-width:2;rx:8}
+  .gift-item:focus-visible .gift-focus{stroke:#ffe1a9}
+
   /* ---------- svg motion ---------- */
   @keyframes twinkle{0%,100%{opacity:.22;transform:scale(.78)}55%{opacity:.95;transform:scale(1.18)}}
   @keyframes aurora{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(4vw,3vh,0) scale(1.08)}}
@@ -298,7 +523,9 @@
     80%{transform:translateX(-3px)}
   }
   #treeBubbles{transition:filter .55s ease}
+  #hangingGifts{transition:filter .55s ease}
   #treeStage.dim #treeBubbles{filter:brightness(.66) saturate(.72)}
+  #treeStage.dim #hangingGifts{filter:brightness(.72) saturate(.85)}
   #treeStage.dim #treeLights .lamp{animation:none;opacity:.12}
   #treeStage.dim #starHalo{opacity:.18}
   .bubble{
@@ -353,6 +580,13 @@
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
   }
+  /* 窄屏最后兜底：保证 5 个按钮不顶到屏幕边缘 */
+  @media (max-width:372px){
+    .dock{gap:3px;padding:5px;border-radius:22px}
+    .ctl{width:54px;height:50px;border-radius:16px}
+    .ctl svg{width:16px;height:16px}
+    .ctl .lbl{font-size:8px}
+  }
 </style>
 </head>
 <body>
@@ -367,45 +601,45 @@
   <svg id="scene" viewBox="0 0 390 780" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-label="一棵挂满泡泡和小可爱的圣诞树">
     <defs>
       <radialGradient id="gTreeGlow" cx="50%" cy="48%" r="55%">
-        <stop offset="0" stop-color="#86f0cd" stop-opacity=".28"/>
-        <stop offset=".58" stop-color="#5ed6c3" stop-opacity=".1"/>
-        <stop offset="1" stop-color="#5ed6c3" stop-opacity="0"/>
+        <stop offset="0" stop-color="var(--glow-a)" stop-opacity=".28"/>
+        <stop offset=".58" stop-color="var(--glow-b)" stop-opacity=".1"/>
+        <stop offset="1" stop-color="var(--glow-b)" stop-opacity="0"/>
       </radialGradient>
       <radialGradient id="gMint1" cx="31%" cy="24%" r="82%">
-        <stop offset="0" stop-color="#e2fff0"/>
-        <stop offset=".38" stop-color="#9af2c9"/>
-        <stop offset=".78" stop-color="#54d4aa"/>
-        <stop offset="1" stop-color="#1c9a7c"/>
+        <stop offset="0" stop-color="var(--m1a)"/>
+        <stop offset=".38" stop-color="var(--m1b)"/>
+        <stop offset=".78" stop-color="var(--m1c)"/>
+        <stop offset="1" stop-color="var(--m1d)"/>
       </radialGradient>
       <radialGradient id="gMint2" cx="30%" cy="24%" r="84%">
-        <stop offset="0" stop-color="#d2fbe7"/>
-        <stop offset=".4" stop-color="#7ae3bd"/>
-        <stop offset=".8" stop-color="#34ba95"/>
-        <stop offset="1" stop-color="#147d68"/>
+        <stop offset="0" stop-color="var(--m2a)"/>
+        <stop offset=".4" stop-color="var(--m2b)"/>
+        <stop offset=".8" stop-color="var(--m2c)"/>
+        <stop offset="1" stop-color="var(--m2d)"/>
       </radialGradient>
       <radialGradient id="gMint3" cx="33%" cy="26%" r="84%">
-        <stop offset="0" stop-color="#eefff5"/>
-        <stop offset=".38" stop-color="#b7f7d7"/>
-        <stop offset=".78" stop-color="#67dcb4"/>
-        <stop offset="1" stop-color="#25a183"/>
+        <stop offset="0" stop-color="var(--m3a)"/>
+        <stop offset=".38" stop-color="var(--m3b)"/>
+        <stop offset=".78" stop-color="var(--m3c)"/>
+        <stop offset="1" stop-color="var(--m3d)"/>
       </radialGradient>
       <radialGradient id="gMint4" cx="30%" cy="23%" r="84%">
-        <stop offset="0" stop-color="#c9f5dd"/>
-        <stop offset=".42" stop-color="#63caa6"/>
-        <stop offset=".8" stop-color="#249678"/>
-        <stop offset="1" stop-color="#0e675d"/>
+        <stop offset="0" stop-color="var(--m4a)"/>
+        <stop offset=".42" stop-color="var(--m4b)"/>
+        <stop offset=".8" stop-color="var(--m4c)"/>
+        <stop offset="1" stop-color="var(--m4d)"/>
       </radialGradient>
       <radialGradient id="gPink" cx="32%" cy="24%" r="82%">
-        <stop offset="0" stop-color="#fff3f8"/>
-        <stop offset=".35" stop-color="#ffc0da"/>
-        <stop offset=".76" stop-color="#f487b4"/>
-        <stop offset="1" stop-color="#d64f8c"/>
+        <stop offset="0" stop-color="var(--pa)"/>
+        <stop offset=".35" stop-color="var(--pb)"/>
+        <stop offset=".76" stop-color="var(--pc)"/>
+        <stop offset="1" stop-color="var(--pd)"/>
       </radialGradient>
       <radialGradient id="gLilac" cx="32%" cy="24%" r="84%">
-        <stop offset="0" stop-color="#fbf3ff"/>
-        <stop offset=".38" stop-color="#d9bdfb"/>
-        <stop offset=".78" stop-color="#ab7bea"/>
-        <stop offset="1" stop-color="#7b4bc2"/>
+        <stop offset="0" stop-color="var(--la)"/>
+        <stop offset=".38" stop-color="var(--lb)"/>
+        <stop offset=".78" stop-color="var(--lc)"/>
+        <stop offset="1" stop-color="var(--ld)"/>
       </radialGradient>
       <radialGradient id="gGold" cx="34%" cy="26%" r="82%">
         <stop offset="0" stop-color="#fffde7"/>
@@ -424,9 +658,9 @@
         <stop offset="1" stop-color="#ffd875" stop-opacity="0"/>
       </radialGradient>
       <linearGradient id="gSnow" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#f3fff9"/>
-        <stop offset=".55" stop-color="#e3f8f1"/>
-        <stop offset="1" stop-color="#c9ece2"/>
+        <stop offset="0" stop-color="var(--snow-a)"/>
+        <stop offset=".55" stop-color="var(--snow-b)"/>
+        <stop offset="1" stop-color="var(--snow-c)"/>
       </linearGradient>
       <linearGradient id="gTrunk" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0" stop-color="#a97663"/>
@@ -469,6 +703,7 @@
       <g id="treeBubbles"></g>
       <g id="treeLights"></g>
       <g id="ornaments"></g>
+      <g id="hangingGifts"></g>
     </g>
 
     <g transform="translate(195 108)">
@@ -498,7 +733,7 @@
     </g>
 
     <path d="M-20 566 C40 548 88 566 130 572 C180 580 215 556 260 566 C310 578 350 560 410 570 L410 800 L-20 800 Z" fill="url(#gSnow)"/>
-    <path d="M-20 590 C50 574 100 590 152 596 C210 604 260 584 410 594 L410 800 L-20 800 Z" fill="#fffdf8" opacity=".82"/>
+    <path id="groundTop" d="M-20 590 C50 574 100 590 152 596 C210 604 260 584 410 594 L410 800 L-20 800 Z" fill="#fffdf8" opacity=".82"/>
 
     <ellipse cx="195" cy="592" rx="118" ry="16" fill="#9fd6c7" opacity=".28"/>
 
@@ -632,14 +867,18 @@
   <div class="grain" aria-hidden="true"></div>
 
   <header class="top">
-    <div class="eyebrow">Merry Christmas</div>
-    <h1>泡泡圣诞树</h1>
-    <p class="sub">A little bubble wish for you</p>
+    <div class="eyebrow">Wish Tree</div>
+    <h1 id="appTitle">心愿树</h1>
+    <p class="sub">Hang a photo, a note, a little wish</p>
   </header>
 
-  <div class="hint ui" id="hint"><span class="spark">✦</span>点一点小泡泡 · 双击空白放烟花</div>
+  <button class="theme-btn ui" id="themeBtn" type="button" aria-label="更换风格">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.4a2.2 2.2 0 0 0 1.7-3.6c-.8-1 .2-2.4 1.5-2.4H18a3 3 0 0 0 3-3A9 9 0 0 0 12 3Z"/><circle cx="7.6" cy="11" r="1.2"/><circle cx="10.2" cy="7.3" r="1.2"/><circle cx="14.6" cy="7.5" r="1.2"/><circle cx="17" cy="11.4" r="1.2"/></svg>
+  </button>
 
-  <div class="dock ui" role="group" aria-label="圣诞树互动">
+  <div class="hint ui" id="hint"><span class="spark">✦</span>点泡泡 · 挂礼物 · 双击空白放烟花</div>
+
+  <div class="dock ui" role="group" aria-label="心愿树互动">
     <button class="ctl active" id="lightBtn" type="button" aria-pressed="true" aria-label="切换灯光">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l1.6 5.1 5.1 1.6-5.1 1.6L12 16.2l-1.6-5.1-5.1-1.6 5.1-1.6L12 2.8Z"/><path d="M19 15.8l.8 2.4 2.4.8-2.4.8-.8 2.4-.8-2.4-2.4-.8 2.4-.8.8-2.4Z"/></svg>
       <span class="lbl" id="lightLbl">灯光</span>
@@ -651,6 +890,11 @@
     <button class="ctl" id="musicBtn" type="button" aria-pressed="false" aria-label="播放音乐盒">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
       <span class="lbl">音乐</span>
+    </button>
+    <button class="ctl" id="giftBtn" type="button" aria-label="挂一份礼物">
+      <span class="badge" id="giftBadge" hidden>0</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h16v10.2a1.3 1.3 0 0 1-1.3 1.3H5.3A1.3 1.3 0 0 1 4 19.7Z"/><path d="M3 7.4h18v3H3zM12 7.4v13.6"/><path d="M12 7.2C9.4 7.2 6.6 5.8 6.6 4.1 6.6 2.9 7.6 2 8.8 2c1.9 0 3.2 2.6 3.2 5.2 0-2.6 1.3-5.2 3.2-5.2 1.2 0 2.2.9 2.2 2.1 0 1.7-2.8 3.1-5.4 3.1Z"/></svg>
+      <span class="lbl">礼物</span>
     </button>
     <button class="ctl" id="wishBtn" type="button" aria-label="许一个愿望">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.6c0 5-8.8 10.2-8.8 10.2S3.2 13.6 3.2 8.6A4.8 4.8 0 0 1 12 5.5a4.8 4.8 0 0 1 8.8 3.1Z"/></svg>
@@ -676,7 +920,59 @@
     </div>
   </div>
 
-  <noscript><div class="noscript">这棵泡泡树需要一点点 JavaScript 才能亮起来。<br>请在浏览器设置中开启 JavaScript 后再来看看吧。</div></noscript>
+  <div class="modal" id="themeModal" role="dialog" aria-modal="true" aria-labelledby="themeTitle" aria-hidden="true">
+    <div class="wish-card theme-card">
+      <button class="wish-close" id="themeClose" type="button" aria-label="关闭">×</button>
+      <div class="wish-icon">✿</div>
+      <h2 id="themeTitle">换一种心情</h2>
+      <p class="copy">同一棵树，五种光线。</p>
+      <div class="theme-list" id="themeList"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="giftModal" role="dialog" aria-modal="true" aria-labelledby="giftTitle" aria-hidden="true">
+    <div class="wish-card gift-card" id="giftCard">
+      <button class="wish-close" id="giftClose" type="button" aria-label="关闭">×</button>
+      <div class="wish-icon" id="giftIcon">🎁</div>
+      <h2 id="giftTitle">挂一份礼物</h2>
+      <p class="copy" id="giftCopy">一张照片，或者一句想说的话。</p>
+      <div class="gift-tabs" role="tablist">
+        <button class="gift-tab active" id="tabPhoto" type="button" data-tab="photo" role="tab" aria-selected="true">照片</button>
+        <button class="gift-tab" id="tabNote" type="button" data-tab="note" role="tab" aria-selected="false">文字</button>
+      </div>
+      <div class="gift-pane" id="panePhoto">
+        <label class="gift-drop" id="giftDrop">
+          <input type="file" id="giftFile" accept="image/*" hidden>
+          <span class="drop-label"><b>选一张照片</b>只保存在这台设备上</span>
+          <img id="giftPreview" alt="" hidden>
+        </label>
+        <p class="gift-tip">会压到最长边 560px，不占太多空间</p>
+        <input class="gift-caption" id="giftCaption" type="text" maxlength="16" placeholder="给照片写一句话（选填）">
+      </div>
+      <div class="gift-pane" id="paneNote" hidden>
+        <textarea class="wish-input gift-textarea" id="giftText" maxlength="60" placeholder="写一句想挂在树上的话"></textarea>
+        <div class="wish-meta"><span id="giftTextCount">0</span>&nbsp;/&nbsp;60</div>
+      </div>
+      <div class="gift-colors" id="giftColors" role="group" aria-label="礼物颜色"></div>
+      <button class="wish-submit" id="giftSubmit" type="button">挂到树上</button>
+      <button class="wish-cancel" id="giftCancel" type="button">再想想</button>
+    </div>
+  </div>
+
+  <div class="modal" id="giftViewModal" role="dialog" aria-modal="true" aria-labelledby="giftViewTitle" aria-hidden="true">
+    <div class="wish-card gift-view">
+      <button class="wish-close" id="giftViewClose" type="button" aria-label="关闭">×</button>
+      <h2 id="giftViewTitle">树上的礼物</h2>
+      <div id="giftViewBody"></div>
+      <p class="stamp" id="giftViewStamp"></p>
+      <div class="gift-actions">
+        <button id="giftEdit" type="button">编辑</button>
+        <button id="giftDelete" type="button" class="danger">删除</button>
+      </div>
+    </div>
+  </div>
+
+  <noscript><div class="noscript">这棵心愿树需要一点点 JavaScript 才能亮起来。<br>请在浏览器设置中开启 JavaScript 后再来看看吧。</div></noscript>
 </div>
 
 <script>
@@ -686,9 +982,93 @@
   var NS = 'http://www.w3.org/2000/svg';
   var $ = function(sel, root){ return (root || document).querySelector(sel); };
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var WISH_KEY = 'bubble-christmas-wishes-v1';
+  var WISH_KEY = 'wish-tree-wishes-v1';
+  var LEGACY_WISH_KEY = 'bubble-christmas-wishes-v1';
+  var GIFT_KEY = 'wish-tree-gifts-v1';
+  var THEME_KEY = 'wish-tree-theme-v1';
   var isWeChat = /MicroMessenger/i.test(navigator.userAgent);
   var interacted = false;
+
+  function storeGet(key){
+    try{ return localStorage.getItem(key); }catch(e){ return null; }
+  }
+  function storeSet(key, value){
+    try{ localStorage.setItem(key, value); return true; }catch(e){ return false; }
+  }
+
+  function openModal(el){ el.classList.add('open'); el.setAttribute('aria-hidden', 'false'); }
+  function closeModal(el){ el.classList.remove('open'); el.setAttribute('aria-hidden', 'true'); }
+
+  /* ---------------- themes ---------------- */
+  var THEMES = [
+    { id: 'midnight', name: '午夜松林', en: 'MIDNIGHT PINE', dots: ['#54d4aa', '#ffb3ce', '#ffd36e'], meta: '#1b2242' },
+    { id: 'cream', name: '奶油晨光', en: 'CREAM MORNING', dots: ['#9fe0c2', '#f7a8c6', '#ffd36e'], meta: '#ffeede' },
+    { id: 'noir', name: '黑金夜宴', en: 'BLACK & GOLD', dots: ['#d8b25e', '#4f9a76', '#f2b6a0'], meta: '#15120f' },
+    { id: 'sakura', name: '樱花黄昏', en: 'SAKURA DUSK', dots: ['#f7a8c9', '#c9a8f0', '#ffd2e4'], meta: '#5b3f63' },
+    { id: 'aurora', name: '极光森林', en: 'AURORA FOREST', dots: ['#5fdcc6', '#8fbdf0', '#a89af0'], meta: '#07303f' }
+  ];
+  var themeListEl = $('#themeList');
+
+  function applyTheme(id, persist){
+    var theme = null;
+    for(var i = 0; i < THEMES.length; i++){ if(THEMES[i].id === id){ theme = THEMES[i]; break; } }
+    if(!theme){ theme = THEMES[0]; }
+    document.body.setAttribute('data-theme', theme.id);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.setAttribute('content', theme.meta);
+    if(themeListEl){
+      var items = themeListEl.querySelectorAll('.theme-item');
+      for(var j = 0; j < items.length; j++){
+        var on = items[j].getAttribute('data-theme-id') === theme.id;
+        items[j].classList.toggle('active', on);
+        items[j].setAttribute('aria-pressed', String(on));
+        var tick = items[j].querySelector('.tick');
+        if(tick) tick.hidden = !on;
+      }
+    }
+    if(persist) storeSet(THEME_KEY, theme.id);
+  }
+
+  function renderThemeList(){
+    if(!themeListEl) return;
+    themeListEl.innerHTML = '';
+    THEMES.forEach(function(t){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'theme-item';
+      btn.setAttribute('data-theme-id', t.id);
+      btn.setAttribute('aria-pressed', 'false');
+      var name = document.createElement('span');
+      name.className = 'name';
+      name.textContent = t.name;
+      var en = document.createElement('small');
+      en.textContent = t.en;
+      name.appendChild(en);
+      var dots = document.createElement('span');
+      dots.className = 'dots';
+      t.dots.forEach(function(c){
+        var dot = document.createElement('i');
+        dot.style.background = c;
+        dots.appendChild(dot);
+      });
+      var tick = document.createElement('span');
+      tick.className = 'tick';
+      tick.textContent = '✓';
+      tick.hidden = true;
+      btn.appendChild(name);
+      btn.appendChild(dots);
+      btn.appendChild(tick);
+      themeListEl.appendChild(btn);
+    });
+    themeListEl.addEventListener('click', function(e){
+      var item = e.target.closest('.theme-item');
+      if(!item) return;
+      applyTheme(item.getAttribute('data-theme-id'), true);
+      playPop();
+      showToast('换成了「' + (item.querySelector('.name').firstChild.textContent) + '」', 1500);
+      setTimeout(function(){ closeModal($('#themeModal')); }, 220);
+    });
+  }
 
   function svgEl(tag, attrs){
     var node = document.createElementNS(NS, tag);
@@ -1109,7 +1489,7 @@
   /* ---------------- wishes ---------------- */
   var wishes = [];
   try{
-    var rawWishes = JSON.parse(localStorage.getItem(WISH_KEY) || '[]');
+    var rawWishes = JSON.parse(storeGet(WISH_KEY) || storeGet(LEGACY_WISH_KEY) || '[]');
     if(Array.isArray(rawWishes)){
       wishes = rawWishes.filter(function(w){ return typeof w === 'string' && w.length; }).slice(0, 12);
     }
@@ -1178,6 +1558,429 @@
   wishInput.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); submitWish(); } });
   wishModal.addEventListener('click', function(e){ if(e.target === wishModal) closeWish(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && wishModal.classList.contains('open')) closeWish(); });
+
+  /* ---------------- hanging gifts ---------------- */
+  var GIFT_SLOTS = [
+    { x: 98,  y: 240, len: 26 }, { x: 292, y: 240, len: 26 },
+    { x: 84,  y: 308, len: 30 }, { x: 306, y: 308, len: 30 },
+    { x: 100, y: 376, len: 34 }, { x: 290, y: 376, len: 34 },
+    { x: 120, y: 442, len: 38 }, { x: 270, y: 442, len: 38 },
+    { x: 150, y: 496, len: 44 }, { x: 240, y: 496, len: 44 }
+  ];
+  var GIFT_COLORS = [
+    { id: 'pink',   box: '#f7a8c6', lid: '#ffd2e4' },
+    { id: 'mint',   box: '#8fd9b8', lid: '#c9f0dd' },
+    { id: 'gold',   box: '#f5c65e', lid: '#ffe6a6' },
+    { id: 'violet', box: '#b18fe6', lid: '#d9c8fb' }
+  ];
+
+  var gifts = [];
+  (function loadGifts(){
+    try{
+      var raw = JSON.parse(storeGet(GIFT_KEY) || '[]');
+      if(Array.isArray(raw)){
+        gifts = raw.filter(function(g){
+          if(!g || typeof g.id !== 'string') return false;
+          if(g.type === 'photo') return typeof g.photo === 'string' && g.photo.indexOf('data:image') === 0;
+          return typeof g.text === 'string' && g.text.trim().length > 0;
+        }).slice(0, GIFT_SLOTS.length);
+      }
+    }catch(e){ gifts = []; }
+  })();
+
+  var giftGroup = $('#hangingGifts');
+  var sceneDefs = $('#scene defs');
+  var giftEditingId = null;
+  var giftDraft = null;
+  var giftViewId = null;
+  var giftDeleteArmed = false;
+
+  function giftById(id){
+    for(var i = 0; i < gifts.length; i++){ if(gifts[i].id === id) return gifts[i]; }
+    return null;
+  }
+  function giftColor(id){
+    for(var i = 0; i < GIFT_COLORS.length; i++){ if(GIFT_COLORS[i].id === id) return GIFT_COLORS[i]; }
+    return GIFT_COLORS[0];
+  }
+  function saveGifts(){
+    if(storeSet(GIFT_KEY, JSON.stringify(gifts))) return true;
+    showToast('浏览器空间不够了，删掉一两份照片礼物再试试', 3000);
+    return false;
+  }
+  function splitLines(text, per){
+    var s = String(text || '').replace(/\s+/g, ' ').trim();
+    if(s.length <= per) return [s];
+    var lines = [s.slice(0, per), s.slice(per, per * 2)];
+    if(s.length > per * 2) lines[1] = lines[1].slice(0, per - 1) + '…';
+    return lines;
+  }
+
+  function buildGiftNode(g, slot){
+    var c = giftColor(g.color);
+    var outer = svgEl('g', { transform: 'translate(' + slot.x + ' ' + slot.y + ')' });
+    var node = svgEl('g', {
+      'class': 'gift-item', 'data-hit': 'gift', 'data-id': g.id,
+      role: 'button', tabindex: '0',
+      'aria-label': g.type === 'photo' ? '树上的照片礼物' : '树上的文字礼物'
+    });
+    node.appendChild(svgEl('path', {
+      d: 'M0 ' + (-slot.len) + ' Q 4 ' + (-slot.len / 2) + ' 0 0',
+      fill: 'none', stroke: '#f6d79a', 'stroke-width': 1, opacity: '.8'
+    }));
+
+    if(g.type === 'photo'){
+      var clipId = 'giftClip-' + g.id.replace(/[^a-zA-Z0-9_-]/g, '');
+      var cp = svgEl('clipPath', { id: clipId, 'data-gift': '1' });
+      cp.appendChild(svgEl('rect', { x: -18, y: -22, width: 36, height: 32, rx: 2.5 }));
+      sceneDefs.appendChild(cp);
+
+      var frame = svgEl('g', { transform: 'rotate(-3)' });
+      frame.appendChild(svgEl('rect', { x: -22, y: -26, width: 44, height: 52, rx: 4, fill: '#fffdf8', stroke: '#efd8c6', 'stroke-width': 1 }));
+      var img = svgEl('image', {
+        x: -18, y: -22, width: 36, height: 32,
+        preserveAspectRatio: 'xMidYMid slice',
+        'clip-path': 'url(#' + clipId + ')'
+      });
+      img.setAttribute('href', g.photo);
+      img.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', g.photo);
+      frame.appendChild(img);
+      frame.appendChild(svgEl('rect', { x: -22, y: -26, width: 44, height: 52, rx: 4, fill: 'none', stroke: '#efd8c6', 'stroke-width': 1 }));
+      frame.appendChild(svgEl('rect', { x: -8, y: -29, width: 16, height: 5, rx: 2.4, fill: '#f3e2d2' }));
+      if(g.caption){
+        var cap = svgEl('text', {
+          x: 0, y: 19.5, 'text-anchor': 'middle',
+          'font-size': '5.2', 'font-weight': '700', fill: '#8a6a58'
+        });
+        cap.textContent = g.caption.slice(0, 8);
+        frame.appendChild(cap);
+      }
+      node.appendChild(frame);
+    } else {
+      var box = svgEl('g', {});
+      box.appendChild(svgEl('rect', { x: -16, y: -4, width: 32, height: 22, rx: 4, fill: c.box }));
+      box.appendChild(svgEl('rect', { x: -18, y: -8, width: 36, height: 9, rx: 3, fill: c.lid }));
+      box.appendChild(svgEl('rect', { x: -3, y: -8, width: 6, height: 26, fill: '#fff8ee', opacity: '.92' }));
+      box.appendChild(svgEl('path', {
+        d: 'M0 -8 C-6 -14 -14 -10 -9 -5 C-6 -2 -2 -4 0 -8 C2 -4 6 -2 9 -5 C14 -10 6 -14 0 -8 Z',
+        fill: '#fff8ee'
+      }));
+      box.appendChild(svgEl('circle', { cx: 0, cy: -7, r: 1.8, fill: c.lid }));
+      node.appendChild(box);
+
+      var lines = splitLines(g.text, 6);
+      var tag = svgEl('g', { transform: 'translate(0 20)' });
+      var tagH = lines.length > 1 ? 21 : 14.5;
+      tag.appendChild(svgEl('rect', { x: -21, y: 0, width: 42, height: tagH, rx: 4, fill: '#fffaf0', stroke: '#ecd7bd', 'stroke-width': .9 }));
+      tag.appendChild(svgEl('path', { d: 'M-4 -1 L-4 -4 M4 -1 L4 -4', stroke: '#e2c9ab', 'stroke-width': 1, 'stroke-linecap': 'round' }));
+      lines.forEach(function(line, i){
+        var t = svgEl('text', {
+          x: 0, y: 9 + i * 8, 'text-anchor': 'middle',
+          'font-size': '6', 'font-weight': '700', fill: '#6f5348'
+        });
+        t.textContent = line;
+        tag.appendChild(t);
+      });
+      node.appendChild(tag);
+    }
+
+    node.appendChild(svgEl('rect', {
+      'class': 'gift-focus', x: -25, y: -32, width: 50, height: 82, rx: 8
+    }));
+    outer.appendChild(node);
+    return outer;
+  }
+
+  function renderGifts(animate){
+    while(giftGroup.firstChild) giftGroup.removeChild(giftGroup.firstChild);
+    var oldClips = sceneDefs.querySelectorAll('clipPath[data-gift]');
+    for(var i = oldClips.length - 1; i >= 0; i--){ oldClips[i].parentNode.removeChild(oldClips[i]); }
+    gifts.forEach(function(g, idx){
+      var node = buildGiftNode(g, GIFT_SLOTS[idx % GIFT_SLOTS.length]);
+      if(animate === 'all' || animate === g.id){
+        var inner = node.firstChild;
+        if(inner) inner.classList.add('drop');
+      }
+      giftGroup.appendChild(node);
+    });
+    updateGiftBadge();
+  }
+
+  function updateGiftBadge(){
+    var badge = $('#giftBadge');
+    if(!badge) return;
+    badge.textContent = String(gifts.length);
+    badge.hidden = gifts.length === 0;
+  }
+
+  function setGiftTab(type){
+    if(!giftDraft) return;
+    giftDraft.type = type;
+    var photo = type === 'photo';
+    var tabPhoto = $('#tabPhoto'), tabNote = $('#tabNote');
+    tabPhoto.classList.toggle('active', photo);
+    tabNote.classList.toggle('active', !photo);
+    tabPhoto.setAttribute('aria-selected', String(photo));
+    tabNote.setAttribute('aria-selected', String(!photo));
+    $('#panePhoto').hidden = !photo;
+    $('#paneNote').hidden = photo;
+  }
+
+  function renderGiftColors(){
+    var wrap = $('#giftColors');
+    if(!wrap) return;
+    wrap.innerHTML = '';
+    GIFT_COLORS.forEach(function(c){
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'gift-color' + (giftDraft && giftDraft.color === c.id ? ' active' : '');
+      btn.setAttribute('data-color', c.id);
+      btn.setAttribute('aria-label', '礼物颜色 ' + c.id);
+      btn.style.setProperty('--c', c.box);
+      wrap.appendChild(btn);
+    });
+  }
+
+  function openGiftForm(gift){
+    giftEditingId = gift ? gift.id : null;
+    giftDraft = gift
+      ? { type: gift.type, photo: gift.photo || '', caption: gift.caption || '', text: gift.text || '', color: gift.color || 'pink' }
+      : { type: 'photo', photo: '', caption: '', text: '', color: 'pink' };
+
+    $('#giftTitle').textContent = gift ? '改一改这份礼物' : '挂一份礼物';
+    $('#giftCopy').textContent = gift ? '改完还会待在原来的位置。' : '一张照片，或者一句想说的话。';
+    $('#giftSubmit').textContent = gift ? '保存修改' : '挂到树上';
+
+    var drop = $('#giftDrop'), prev = $('#giftPreview');
+    if(giftDraft.photo){
+      prev.src = giftDraft.photo;
+      prev.hidden = false;
+      drop.classList.add('has-photo');
+    }else{
+      prev.removeAttribute('src');
+      prev.hidden = true;
+      drop.classList.remove('has-photo');
+    }
+    $('#giftCaption').value = giftDraft.caption;
+    $('#giftText').value = giftDraft.text;
+    $('#giftTextCount').textContent = String(giftDraft.text.length);
+    $('#giftFile').value = '';
+    setGiftTab(giftDraft.type);
+    renderGiftColors();
+    openModal($('#giftModal'));
+  }
+
+  function shakeGiftCard(){
+    var card = $('#giftCard');
+    card.classList.remove('shake');
+    void card.offsetWidth;
+    card.classList.add('shake');
+  }
+
+  function compressImage(file, cb){
+    var reader = new FileReader();
+    reader.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        try{
+          var max = 560;
+          var scale = Math.min(1, max / Math.max(img.width, img.height));
+          var w = Math.max(1, Math.round(img.width * scale));
+          var h = Math.max(1, Math.round(img.height * scale));
+          var canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          var ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, w, h);
+          ctx.drawImage(img, 0, 0, w, h);
+          cb(canvas.toDataURL('image/jpeg', .74));
+        }catch(e){ cb(null); }
+      };
+      img.onerror = function(){ cb(null); };
+      img.src = reader.result;
+    };
+    reader.onerror = function(){ cb(null); };
+    reader.readAsDataURL(file);
+  }
+
+  function submitGift(){
+    if(!giftDraft) return;
+    var type = giftDraft.type;
+    var text = $('#giftText').value.trim().replace(/\s+/g, ' ').slice(0, 60);
+    var caption = $('#giftCaption').value.trim().replace(/\s+/g, ' ').slice(0, 16);
+
+    if(type === 'photo' && !giftDraft.photo){ shakeGiftCard(); showToast('先选一张照片吧', 1600); return; }
+    if(type === 'note' && !text){ shakeGiftCard(); showToast('写一句话再挂上去吧', 1600); return; }
+
+    if(giftEditingId){
+      var current = giftById(giftEditingId);
+      if(!current) return;
+      current.type = type;
+      current.photo = type === 'photo' ? giftDraft.photo : '';
+      current.caption = type === 'photo' ? caption : '';
+      current.text = type === 'note' ? text : '';
+      current.color = giftDraft.color;
+      if(!saveGifts()) return;
+      renderGifts(current.id);
+      closeModal($('#giftModal'));
+      playSparkle();
+      showToast('礼物改好啦', 1600);
+      return;
+    }
+
+    if(gifts.length >= GIFT_SLOTS.length){
+      showToast('树上已经挂满 ' + GIFT_SLOTS.length + ' 份礼物啦，先取下一份吧', 2800);
+      return;
+    }
+    var gift = {
+      id: 'g' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      type: type,
+      photo: type === 'photo' ? giftDraft.photo : '',
+      caption: type === 'photo' ? caption : '',
+      text: type === 'note' ? text : '',
+      color: giftDraft.color,
+      createdAt: Date.now()
+    };
+    gifts.unshift(gift);
+    if(!saveGifts()){ gifts.shift(); return; }
+    renderGifts(gift.id);
+    closeModal($('#giftModal'));
+    playSparkle();
+    showToast('礼物挂上树啦 🎁', 2000);
+    say('yuzu', ['这份礼物，', '我替你挂好了。'], 3000);
+    var node = giftGroup.querySelector('[data-id="' + gift.id + '"]');
+    if(node) burstAtElement(node, 14, 'gold');
+    if(navigator.vibrate){ try{ navigator.vibrate(12); }catch(e){} }
+  }
+
+  function openGiftView(id){
+    var g = giftById(id);
+    if(!g) return;
+    giftViewId = id;
+    giftDeleteArmed = false;
+    $('#giftDelete').textContent = '删除';
+    $('#giftViewTitle').textContent = g.type === 'photo' ? '一张照片' : '一句话';
+    var body = $('#giftViewBody');
+    body.innerHTML = '';
+    if(g.type === 'photo'){
+      var media = document.createElement('div');
+      media.className = 'media';
+      var img = document.createElement('img');
+      img.src = g.photo;
+      img.alt = g.caption || '树上的照片';
+      media.appendChild(img);
+      body.appendChild(media);
+      if(g.caption){
+        var cap = document.createElement('div');
+        cap.className = 'note';
+        cap.textContent = g.caption;
+        body.appendChild(cap);
+      }
+    }else{
+      var note = document.createElement('div');
+      note.className = 'note';
+      note.textContent = g.text;
+      body.appendChild(note);
+    }
+    var d = new Date(g.createdAt || Date.now());
+    $('#giftViewStamp').textContent = '挂在树上 · ' + (d.getMonth() + 1) + ' 月 ' + d.getDate() + ' 日';
+    openModal($('#giftViewModal'));
+  }
+
+  $('#giftBtn').addEventListener('click', function(){
+    interacted = true;
+    hideHint();
+    playPop();
+    openGiftForm(null);
+  });
+  $('#giftClose').addEventListener('click', function(){ closeModal($('#giftModal')); });
+  $('#giftCancel').addEventListener('click', function(){ closeModal($('#giftModal')); });
+  $('#giftSubmit').addEventListener('click', submitGift);
+  $('#giftModal').addEventListener('click', function(e){ if(e.target === this) closeModal(this); });
+  $('#tabPhoto').addEventListener('click', function(){ setGiftTab('photo'); });
+  $('#tabNote').addEventListener('click', function(){ setGiftTab('note'); });
+  $('#giftText').addEventListener('input', function(){ $('#giftTextCount').textContent = String(this.value.length); });
+  $('#giftColors').addEventListener('click', function(e){
+    var btn = e.target.closest('.gift-color');
+    if(!btn || !giftDraft) return;
+    giftDraft.color = btn.getAttribute('data-color');
+    var all = this.querySelectorAll('.gift-color');
+    for(var i = 0; i < all.length; i++){ all[i].classList.toggle('active', all[i] === btn); }
+    playPop();
+  });
+  $('#giftFile').addEventListener('change', function(){
+    var file = this.files && this.files[0];
+    if(!file) return;
+    if(file.type && file.type.indexOf('image/') !== 0){ showToast('请选择图片文件', 1800); return; }
+    showToast('正在处理照片…', 1200);
+    compressImage(file, function(data){
+      if(!data){ showToast('这张照片读不出来，换一张试试', 2200); return; }
+      giftDraft.photo = data;
+      var prev = $('#giftPreview');
+      prev.src = data;
+      prev.hidden = false;
+      $('#giftDrop').classList.add('has-photo');
+    });
+  });
+  $('#giftDrop').addEventListener('dragover', function(e){ e.preventDefault(); });
+  $('#giftDrop').addEventListener('drop', function(e){
+    e.preventDefault();
+    var file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if(!file) return;
+    compressImage(file, function(data){
+      if(!data){ showToast('这张照片读不出来，换一张试试', 2200); return; }
+      giftDraft.photo = data;
+      var prev = $('#giftPreview');
+      prev.src = data;
+      prev.hidden = false;
+      $('#giftDrop').classList.add('has-photo');
+    });
+  });
+
+  $('#giftViewClose').addEventListener('click', function(){ closeModal($('#giftViewModal')); });
+  $('#giftViewModal').addEventListener('click', function(e){ if(e.target === this) closeModal(this); });
+  $('#giftEdit').addEventListener('click', function(){
+    var g = giftById(giftViewId);
+    if(!g) return;
+    closeModal($('#giftViewModal'));
+    openGiftForm(g);
+  });
+  $('#giftDelete').addEventListener('click', function(){
+    if(!giftDeleteArmed){
+      giftDeleteArmed = true;
+      this.textContent = '再点一次删除';
+      var btn = this;
+      setTimeout(function(){
+        if(!giftDeleteArmed) return;
+        giftDeleteArmed = false;
+        btn.textContent = '删除';
+      }, 3200);
+      return;
+    }
+    gifts = gifts.filter(function(g){ return g.id !== giftViewId; });
+    saveGifts();
+    renderGifts();
+    closeModal($('#giftViewModal'));
+    showToast('礼物已经取下来啦', 1700);
+  });
+
+  /* ---------------- theme panel wiring ---------------- */
+  $('#themeBtn').addEventListener('click', function(){
+    interacted = true;
+    hideHint();
+    playPop();
+    openModal($('#themeModal'));
+  });
+  $('#themeClose').addEventListener('click', function(){ closeModal($('#themeModal')); });
+  $('#themeModal').addEventListener('click', function(e){ if(e.target === this) closeModal(this); });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape') return;
+    if($('#giftModal').classList.contains('open')) closeModal($('#giftModal'));
+    if($('#giftViewModal').classList.contains('open')) closeModal($('#giftViewModal'));
+    if($('#themeModal').classList.contains('open')) closeModal($('#themeModal'));
+  });
 
   wishTag.addEventListener('click', function(e){
     e.stopPropagation();
@@ -1419,6 +2222,10 @@
     if(type === 'ornament'){
       e.stopPropagation();
       handleOrnament(hit, e);
+    }else if(type === 'gift'){
+      e.stopPropagation();
+      interacted = true; hideHint(); playPop();
+      openGiftView(hit.getAttribute('data-id'));
     }else if(type === 'star'){
       e.stopPropagation();
       interacted = true; hideHint(); playPop();
@@ -1465,6 +2272,7 @@
     e.preventDefault();
     var type = hit.getAttribute('data-hit');
     if(type === 'ornament'){ handleOrnament(hit, { clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 }); }
+    else if(type === 'gift'){ openGiftView(hit.getAttribute('data-id')); }
     else if(type === 'star'){ openWish(); }
     else if(type === 'wish-tag'){ hit.dispatchEvent(new MouseEvent('click', { bubbles: true })); }
   });
@@ -1498,6 +2306,9 @@
 
   /* ---------------- intro / lifecycle ---------------- */
   updateWishUI();
+  renderThemeList();
+  applyTheme(storeGet(THEME_KEY) || 'midnight', false);
+  renderGifts('all');
   resize();
   requestAnimationFrame(drawFrame);
   requestAnimationFrame(function(){
