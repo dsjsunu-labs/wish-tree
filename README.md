@@ -1,4 +1,4 @@
-# 心愿树 · Wish Tree
+﻿# 心愿树 · Wish Tree
 
 一棵可以**挂照片、挂文字、许愿**的树。整个应用就是一个 `index.html`：不联网、不安装、无外链依赖，双击就能玩，手机竖屏优先。
 
@@ -13,7 +13,7 @@
 | 方式 | 步骤 |
 | --- | --- |
 | 下载即用 | 下载本仓库 → 双击 `index.html`（Edge / Chrome / Safari） |
-| 在线试玩 | <https://dsjsunu.github.io/wish-tree/> |
+| 在线试玩 | <https://dsjsunu-labs.github.io/wish-tree/> |
 | 发给朋友 | 部署到任意静态托管，或在微信里打开这个网址 |
 
 不需要 Node、Python 或任何构建步骤。
